@@ -31,7 +31,7 @@ function Loans() {
           console.log('Error fetching loan details:', err);
         });
     
-  }, );
+  },[]);
 
   return (
     <div className="flex flex-col  h-[90vh] overflow-scroll items-center w-full">

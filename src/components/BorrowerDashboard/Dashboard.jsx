@@ -79,7 +79,7 @@ function Dashboard() {
     checkAuth();
     det();
     
-  }, []);
+  },[]);
 
   return (
     <Context.Provider value={[details, setDetails]}>

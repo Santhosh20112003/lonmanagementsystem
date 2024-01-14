@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { Context } from "./Dashboard";
 import axios from "axios";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 export default function Payment(props) {
   const regex = /^(?!.*--)(?![a-zA-Z])[0-9]{1,4}$/;
@@ -26,7 +28,7 @@ export default function Payment(props) {
     return () => {
       window.removeEventListener('beforeunload', handleBeforeUnload);
     };
-  }, []);
+  },[]);
 
   const setdetailandclose = () =>{
     setAmount(props.paymentamount);
@@ -68,7 +70,16 @@ export default function Payment(props) {
 			  }
 			})
 			.catch((err) => {
-			  alert("Error on Sending Data From Frontend to Backend");
+			  toast.error('Error on Sending Data From Frontend to Backend', {
+          position: "top-right",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: false,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "colored",
+          });
 			  console.log(err);
 			});
 	  }
@@ -161,6 +172,7 @@ export default function Payment(props) {
           </div>
         </>
       ) : null}
+      <ToastContainer />
     </>
   );
 }

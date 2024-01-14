@@ -37,7 +37,7 @@ function Loans() {
           console.log('Error fetching loan details:', err);
         });
     
-  }, );
+  },[]);
 
   return (
     <div className="flex flex-col  h-[90vh] overflow-scroll items-center w-full">
@@ -88,7 +88,7 @@ function Loans() {
                 <td className="px-3 py-4 text-start whitespace-nowrap">
                   <div className="flex items-center">
                     <div className="flex-shrink-0 w-10 h-10 flex items-center justify-center bg-pink-400  rounded-full">
-                      <p className="text-xl">{loan.lendername.charAt(0)}</p>
+                      <p className="text-xl mt-1">{loan.lendername.charAt(0)}</p>
                     </div>
                     <div className="ml-4">
                       <div className="text-sm font-medium text-gray-900">{loan.lendername} (Me)</div>
@@ -99,7 +99,7 @@ function Loans() {
                 <td className="px-3 py-4 text-start whitespace-nowrap">
                   <div className="flex items-center">
                     <div className="flex-shrink-0 w-10 h-10 flex items-center justify-center bg-blue-400 rounded-full">
-                      <p className="text-xl">{loan.borrowername.charAt(0)}</p>
+                      <p className="text-xl mt-1">{loan.borrowername.charAt(0)}</p>
                     </div>
                     <div className="ml-4">
                       <div className="text-sm font-medium text-gray-900">{loan.borrowername}</div>

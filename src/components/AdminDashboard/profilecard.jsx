@@ -5,8 +5,6 @@ import { Context } from "./Dashboard";
 const FreeCard = () => {
 	const [details] =useContext(Context);
 	return (
-	
-	  
 		<div className="absolute bottom-4 ml-7 flex w-[200px] mt-8  h-fit flex-col items-center">
 		  <div className="bg-gradient-to-b from-indigo-200 to-indigo-400 w-full flex  items-center justify-start flex-col shadow-lg mt-8 rounded-3xl">
 		  <div className=" bg-blue-500 h-16 -top-8 w-16 rounded-full flex items-center justify-center border-4 border-indigo-200 text-white md:text-3xl text-2xl text-center relative">

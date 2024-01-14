@@ -117,6 +117,7 @@ function Loans() {
         <table className="divide-y mt-6 divide-gray-200">
           <thead className="bg-gray-50">
             <tr>
+            <th scope="col" className="px-3 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase">ID</th>
               <th scope="col" className="px-3 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase">
                 Borrower
               </th>
@@ -142,14 +143,15 @@ function Loans() {
               <th scope="col" className="px-3 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase">
                 Total
               </th>
-              <th scope="col" className="px-3 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase"></th>
+              
             </tr>
           </thead>
           <tbody className="bg-white divide-y divide-gray-200">
           {loanDetails.length <= 0 ? (<tr>
-        <td colSpan="8" className='text-center py-4 '>No Loans Are Requested</td>
+        <td colSpan="9" className='text-center py-4 '>No Loans Are Requested</td>
       </tr>): loanDetails.map((loan, index) => (
               <tr key={loan.loanid} className="transition-all hover:bg-gray-100 hover:shadow-lg">
+                <td className="px-3 py-4 text-center text-sm text-gray-500 whitespace-nowrap">{index+1}</td>
                 <td className="px-3 py-4 text-start whitespace-nowrap">
                   <div className="flex items-center">
                     <div className="flex-shrink-0 w-10 h-10 flex items-center justify-center bg-blue-400 rounded-full">

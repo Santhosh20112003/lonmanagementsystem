@@ -11,7 +11,6 @@ function Profile() {
   });
 
   useEffect(() => {
-  
     axios.post("http://localhost:5000/admingetdetails", { token: window.localStorage.getItem("tokenadmin") })
       .then((res) => {
         const user = res.data;

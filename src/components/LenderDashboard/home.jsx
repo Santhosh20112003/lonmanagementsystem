@@ -49,56 +49,26 @@ export default function Home() {
     })
       .catch(err => { setrequestcount(0); })
   }
-
-  useEffect(() => {
-    axios.post('http://localhost:5000/getloansbylender', {
-      email: details.email,
+  const totalamount = () => {
+    axios.post("http://localhost:5000/gettotalrepayment",{
+      "email":details.email
     })
-      .then((response) => {
-        const newData = response.data.map((object) => ({
-          loanid: object.loanid,
-          amount: object.amount,
-          lender: object.lender,
-          borrower: object.borrower,
-          interest: object.intrest,
-          timeperiod: object.timeperiod,
-          penalty: object.penalty,
-          status: object.status,
-          lendername: object.lendername,
-          borrowername: object.borrowername,
-          total: object.totalamount
-        }));
-
-        setLoanDetails(newData);
-        let value = 0;
-        let paidvalue = 0;
-
-        loanDetails.forEach((loanDetail) => {
-          value += loanDetail.amount;
-        });
-
-        loanDetails.forEach((loanDetail) => {
-          paidvalue += loanDetail.total - loanDetail.amount;
-        });
-
-        activeloan();
-        requestloan();
-        setpaiddata(details.amount);
-        setdebtdata(value);
-        setpaiddata(paidvalue)
-
-        if (value == 0) {
-          setdebtdata(0);
+      .then((res) => {
+        if (res.status == 200) {
+          const count = res.data.total;
+          setdebtdata(count);
         }
         else {
-          setdebtdata(value);
+          setdebtdata(0);
         }
       })
-      .catch((err) => {
-        console.log('Error fetching loan details:', err);
-      });
-
-  },);
+      .catch(err => { setdebtdata(0); })
+  }
+  useEffect(() => {
+      totalamount();
+      activeloan();
+      requestloan();
+  },[]);
 
   var data1 = {
     labels: ['Paid', 'Debt'],

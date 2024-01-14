@@ -31,7 +31,7 @@ function Loans() {
           console.log('Error fetching loan details:', err);
         });
     
-  }, );
+  },[]);
 
   return (
     <div className="flex flex-col  h-[90vh] overflow-scroll items-center w-full">
@@ -42,6 +42,9 @@ function Loans() {
         <table className="divide-y mt-6 divide-gray-200">
           <thead className="bg-gray-50">
             <tr>
+            <th scope="col" className="px-3 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase">
+                ID
+              </th>
               <th scope="col" className="px-3 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase">
                 name
               </th>
@@ -79,6 +82,7 @@ function Loans() {
         <td colSpan="10" className='text-center py-4'>No Borrowers are there !!</td>
       </tr>): loanDetails.map((loan,index) => (
               <tr key={loan.id} className="transition-all hover:bg-gray-100 hover:shadow-lg">
+                 <td className="px-3 py-4 text-start text-sm  whitespace-nowrap">{index+1}</td>
                  <td className="px-3 py-4 font-bold text-start text-sm  whitespace-nowrap">{loan.name}</td>
                  <td className="px-3 py-4 text-start text-sm  whitespace-nowrap">{loan.email}</td>
 				 <td className="px-3 py-4 text-start text-sm  whitespace-nowrap">+{loan.phonenumber}</td>

@@ -85,7 +85,7 @@ function Dashboard() {
               </a>
             </div>
             <span className="text-none w-full flex flex-col items-start">
-              <p className="text-2xl font-medium w-full text-center text-gray-800 pb-5">MENU</p>
+              <p className="text-2xl font-medium w-full text-center text-gray-800 pb-4">MENU</p>
               <ul className='w-full flex flex-col items-center gap-3'>
                 {links.map((link) => (
                   <Link to={link.link} className={`text-lg text-center py-3 rounded-md transition text-white font-medium hover:bg-gray-800 w-[80%] ${

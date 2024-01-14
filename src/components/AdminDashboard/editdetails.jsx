@@ -1,6 +1,8 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 export default function Edit({ details }) {
   const [showModal, setShowModal] = useState(false);
@@ -88,12 +90,30 @@ export default function Edit({ details }) {
         emailverified:emailVerified})
 	  .then((res)=>{
          if(res.status==200){
-			alert("Details Updated");
+          toast.success('Details Updated 👍', {
+            position: "top-right",
+            autoClose: 3000,
+            hideProgressBar: false,
+            closeOnClick: false,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "colored",
+            });
 		 }
 	  })
 	  .catch((err)=>{
 		    console.log(err);
-			alert("Update Failed");
+        toast.error('Update Failed', {
+          position: "top-right",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: false,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "colored",
+          });
 	  })}
     
       
@@ -330,6 +350,7 @@ export default function Edit({ details }) {
           </div>
         </div>
       )}
+      <ToastContainer />
     </>
   );
 }

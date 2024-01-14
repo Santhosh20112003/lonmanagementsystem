@@ -10,7 +10,6 @@ function History() {
   const { toPDF, targetRef } = usePDF({
     method: 'open',
     filename: "Borrowerhistory.pdf",
-    margin: Margin.NONE,
     format: 'A4'
   });
 
@@ -41,13 +40,13 @@ function History() {
           console.log('Error fetching loan details:', err);
         });
     
-  }, );
+  },[]);
 
   return (
     <div className="flex flex-col  h-[90vh] overflow-scroll items-center w-full">
     <div className='flex lg:w-4/5 w-full  pt-5 justify-between items-center'>
       <h1 className="text-2xl ms-3 font-medium "> Loans History  </h1>
-      <button className='px-3 py-2 rounded-md shadow-lg bg-indigo-500 text-white active:scale-110 transition-transform' onClick={toPDF}> <FontAwesomeIcon icon="fas fa-file-export" className=''></FontAwesomeIcon> Export PDF</button>
+      <button className='px-3 pt-2 pb-1 rounded-md shadow-lg bg-indigo-500 text-white active:scale-110 transition-transform' onClick={toPDF}> <FontAwesomeIcon icon="fas fa-file-export" className=''></FontAwesomeIcon> Export PDF</button>
     </div>
     <div ref={targetRef} className="flex lg:w-4/5 w-full lg:p-0 px-3 h-[90vh] flex-col">
       <table className="divide-y mt-6 divide-gray-200">
@@ -88,7 +87,7 @@ function History() {
               <td className="px-3 py-4 whitespace-nowrap">
                 <div className="flex  items-center">
                   <div className=" w-10 h-10 flex items-center justify-center bg-blue-400 rounded-full">
-                    <p className="text-xl">{loan.borrowername.charAt(0)}</p>
+                    <p className="text-xl mt-1">{loan.borrowername.charAt(0)}</p>
                   </div>
                   <div className="ml-4">
                     <div className="text-sm font-medium text-gray-900">{loan.borrowername} (Me)</div>
@@ -99,7 +98,7 @@ function History() {
               <td className="px-3 py-4 whitespace-nowrap">
                 <div className="flex items-center">
                   <div className="flex-shrink-0 w-10 h-10 flex items-center justify-center bg-pink-400 rounded-full">
-                    <p className="text-xl">{loan.lendername.charAt(0)}</p>
+                    <p className="text-xl mt-1">{loan.lendername.charAt(0)}</p>
                   </div>
                   <div className="ml-4">
                     <div className="text-sm font-medium text-gray-900">{loan.lendername}</div>

@@ -11,7 +11,7 @@ const FreeCard = () => {
 		  <div className="bg-gradient-to-b from-indigo-200 to-indigo-400 w-full flex  items-center justify-start flex-col shadow-lg mt-8 rounded-3xl">
 		  <div className=" bg-pink-500 h-16 -top-8 w-16 text-white rounded-full flex items-center justify-center border-4 border-indigo-200  md:text-3xl text-2xl text-center relative">
                   <p className=" uppercase">{details.name.charAt(0)}</p>  
-				  <div className="absolute  bg-green-500 text-xs px-2 scale-75 rounded-full bottom-0 right-[11px] transform translate-x-2 translate-y-2 border-2 border-indigo-200 text-black">Active</div>        
+				  <p className="absolute  bg-green-500 text-xs px-2 scale-75 rounded-full bottom-0 right-[10px] transform translate-x-2 translate-y-2 border-2 border-indigo-200 text-black">Lender</p>        
                 </div>
 				<span className="-mt-6 pb-4 flex flex-col justify-center items-center">
 				<h1 className="text-sm font-medium text-slate-600"> {details.name}</h1>

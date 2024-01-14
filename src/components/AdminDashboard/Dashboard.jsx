@@ -48,7 +48,6 @@ function Dashboard() {
         .then((res) => {
           const user = res.data;
           userid = user.id;
-          console.log(userid)
           setDetails({
             id:user.id,
             name: user.name,

@@ -3,6 +3,8 @@ import axios from "axios";
 import { Context } from "./Dashboard";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { MonthlyDue, TotalAmount } from "../calculate";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 export default function Modal() {
   const [showModal, setShowModal] = useState(false);
@@ -34,7 +36,7 @@ export default function Modal() {
     return () => {
       window.removeEventListener("keydown", handleEsc);
     };
-  }, []);
+  },[]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -114,14 +116,32 @@ export default function Modal() {
           .post("http://localhost:5000/loanrequest", data)
           .then((res) => {
             if (res.status === 201) {
-              alert("Loan Requested Successfully. Check your Mail");
+              toast.success('Loan Requested Successfully. Check your Mail 📬', {
+                position: "top-right",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "colored",
+                });
               setFormData({ amount: "", type: "", Repayment: "" });
               setShowModal(false);
             }
           })
           .catch((err) => {
-            alert("Error on Sending Data From Frontend to Backend");
             console.error(err);
+            toast.error('Error on Sending Data From Frontend to Backend', {
+              position: "top-right",
+              autoClose: 3000,
+              hideProgressBar: false,
+              closeOnClick: false,
+              pauseOnHover: true,
+              draggable: true,
+              progress: undefined,
+              theme: "colored",
+              });
           });
       } else {
         calculate();
@@ -132,7 +152,7 @@ export default function Modal() {
   return (
     <>
       <button
-        className="px-3 py-2 active:scale-110 transition-transform rounded shadow-lg bg-indigo-500 text-white"
+        className="px-3 pt-2 pb-1 active:scale-110 transition-transform rounded shadow-lg bg-indigo-500 text-white"
         type="button"
         onClick={() => setShowModal(true)}
       >
@@ -268,6 +288,7 @@ export default function Modal() {
           </div>
         </div>
       )}
+      <ToastContainer />
     </>
   );
 }

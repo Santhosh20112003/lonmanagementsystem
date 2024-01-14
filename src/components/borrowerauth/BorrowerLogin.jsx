@@ -49,7 +49,7 @@ function BorrowerLogin() {
          }
       })
       .catch((err) => {
-        setMessage("Invalid Email id and password");
+        setMessage("Account Doesnot Exist ");
         console.log(err);
       });
     }

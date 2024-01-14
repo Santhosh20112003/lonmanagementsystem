@@ -188,14 +188,12 @@ app.post("/lenderregister", (req, res) => {
 
 app.post("/borrowerlogin",(req,res)=>{
 	const { email, password } = req.body;
-
 	connection.query('SELECT * FROM borrower WHERE email = ? AND password = ?', [email, password], (error, results) => {
 	  if (error) {
 		console.error('Error executing MySQL query', error);
 		res.status(500).json({ message: 'Internal server error' });
 		return;
 	  }
-  
 	  if (results.length > 0) {
 		const id = results[0].id;
 		const token = jwt.sign({id},"SanthoshTechnologies",{expiresIn:'1h'});
@@ -209,7 +207,6 @@ app.post("/borrowerlogin",(req,res)=>{
 		res.sendStatus(401);
 	  }
 	});
-
 });
 
 app.post("/adminlogin",(req,res)=>{
@@ -955,6 +952,169 @@ app.post("/getrequestedlenderloancount", (req, res)=>{
         });
 
 });
+
+app.post("/gettotalcount",(req,res)=>{
+	const email = req.body.email;
+	let checkquery = "select count(*) as count from admin where email = ?";
+	let query="SELECT totalamount AS total FROM loans where status = 'approved'";
+	if(email){
+		connection.query(checkquery,email,(err,check)=>{
+			if(err){
+				res.sendStatus(400);
+			}
+			else{
+				if(check[0].count > 0){
+					connection.query(query, (err, result) => {
+						if (err) {
+						  console.log(err);
+						  res.status(400).json(err);
+						} else {
+						  if(result.length > 0){
+							let sum=0;
+							for(let i of result){
+								sum +=i.total;
+								}
+							res.status(200).json({"total":sum});
+						  }
+						  else{
+							  res.sendStatus(404);
+						  }
+				
+						}
+					  });
+				}
+				else{
+					res.status(401).json({message:"Unauthorized"});
+				}
+				
+			}
+		})
+	}
+	else{
+		res.status(404).json("Email is required");
+	}
+})
+
+app.post("/gettotalcountbyborrower",(req,res)=>{
+	const email = req.body.email;
+	let checkquery = "select count(*) as count from borrower where email = ?";
+	let query="SELECT totalamount AS total FROM loans where status = 'approved' AND borrower = ?";
+	if(email){
+		connection.query(checkquery,email,(err,check)=>{
+			if(err){
+				res.sendStatus(400);
+			}
+			else{
+				if(check[0].count > 0){
+					connection.query(query,email,(err, result) => {
+						if (err) {
+						  console.log(err);
+						  res.status(400).json(err);
+						} else {
+						  if(result.length > 0){
+							let sum=0;
+							for(let i of result){
+								sum +=i.total;
+								}
+							res.status(200).json({"total":sum});
+						  }
+						  else{
+							  res.sendStatus(404);
+						  }
+				
+						}
+					  });
+				}
+				else{
+					res.status(401).json({message:"Unauthorized"});
+				}
+				
+			}
+		})
+	}
+	else{
+		res.status(404).json("Email is required");
+	}
+})
+
+app.post("/gettotalrepayment",(req,res)=>{
+	const email = req.body.email;
+	let checkquery = "select count(*) as count from lender where email = ?";
+	let query="SELECT amount AS total FROM loans where status = 'approved' and lender =?";
+	if(email){
+		connection.query(checkquery,email,(err,check)=>{
+			if(err){
+				res.sendStatus(400);
+			}
+			else{
+				if(check[0].count > 0){
+					connection.query(query,email,(err, result) => {
+						if (err) {
+						  console.log(err);
+						  res.status(400).json(err);
+						} else {
+						  if(result.length > 0){
+							let sum=0;
+							console.log(result)
+							for(let i of result){
+								sum +=i.total;
+								}
+							res.status(200).json({"total":sum});
+						  }
+						  else{
+							  res.sendStatus(404);
+						  }
+				
+						}
+					  });
+				}
+				else{
+					res.status(401).json({message:"Unauthorized"});
+				}
+				
+			}
+		})
+	}
+	else{
+		res.status(404).json("Email is required");
+	}
+})
+
+app.post("/getpaidamount",(req,res)=>{
+	const email = req.body.email;
+	let checkquery = "select count(*) as count from admin where email = ?";
+	let query="SELECT * FROM loans where status = 'approved'";
+	if(email){
+		connection.query(checkquery,email,(err,check)=>{
+			if(err){
+				res.sendStatus(400);
+			}
+			else{
+				if(check[0].count > 0){
+					connection.query(query,(err,result)=>{
+						if (err) {
+							console.log(err);
+							res.status(400).json(err);
+						  } else {
+							let paid=0;
+							for(let i of result){
+								paid = paid + (i.totalamount - i.amount); 
+						    }
+							res.status(200).json({"Paid":paid});
+						}
+					})
+				}
+				else{
+					res.status(401).json({message:"Unauthorized"});
+				}
+				
+			}
+		})
+	}
+	else{
+		res.status(404).json("Email is required");
+	}
+})
 
 app.post("/getborrowerhistory", (req, res) => {
 	const borrower = req.body.email;

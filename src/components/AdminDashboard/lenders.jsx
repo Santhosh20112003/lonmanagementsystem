@@ -6,9 +6,6 @@ import Edit from './lendereditdetails';
 
 function Loans() {
   const [loanDetails, setLoanDetails] = useState([]);
-
-  
-
   useEffect(() => {
       axios.get('http://localhost:5000/getlenderslist')
         .then((response) => {
@@ -29,7 +26,7 @@ function Loans() {
           console.log('Error fetching loan details:', err);
         });
     
-  }, );
+  },[]);
 
   return (
     <div className="flex flex-col  h-[90vh] overflow-scroll items-center w-full">

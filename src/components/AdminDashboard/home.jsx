@@ -43,8 +43,8 @@ export default function Home() {
 
   const activeloan = () => {
     axios.get("http://localhost:5000/borrowerscount").then((res) => {
-      if (res.status == 200) {
-        const count = res.data.count
+      if (res.status === 200) {
+        const count = res.data.count;
         setactiveloans(count);
       }
       else {
@@ -58,7 +58,6 @@ export default function Home() {
       .then((res) => {
         if (res.status == 200) {
           const count = res.data.count;
-          console.log(count)
           setrejectedloans(count);
         }
         else {
@@ -67,59 +66,44 @@ export default function Home() {
       })
       .catch(err => { setrejectedloans(0); })
   }
-
-  useEffect(() => {
-    axios
-      .post('http://localhost:5000/getloansbyborrower', {
-        email: details.email,
-      })
-      .then((response) => {
-        const newData = response.data.map((object) => ({
-          loanid: object.loanid,
-          amount: object.amount,
-          lender: object.lender,
-          borrower: object.borrower,
-          interest: object.intrest,
-          timeperiod: object.timeperiod,
-          penalty: object.penalty,
-          status: object.status,
-          lendername: object.lendername,
-          borrowername: object.borrowername,
-          total: object.totalamount
-        }));
-
-        setLoanDetails(newData);
-        let value = 0;
-        let paidvalue = 0;
-
-        loanDetails.forEach((loanDetail) => {
-          value += loanDetail.amount;
-        });
-
-        loanDetails.forEach((loanDetail) => {
-          paidvalue = paidvalue + (loanDetail.total - loanDetail.amount);
-        });
-
-        console.log(paidvalue)
-
-        activeloan();
-        rejectloan();
-        setpaiddata(details.amount);
-        setdebtdata(value);
-        setpaiddata(paidvalue)
-
-        if (value == 0) {
-          setdebtdata(0);
+  const totalamount = () => {
+    axios.post("http://localhost:5000/gettotalcount",{
+      "email":details.email
+    })
+      .then((res) => {
+        if (res.status == 200) {
+          const count = res.data.total;
+          setdebtdata(count);
         }
         else {
-          setdebtdata(value);
+          setdebtdata(0);
         }
       })
-      .catch((err) => {
-        console.log('Error fetching loan details:', err);
-      });
+      .catch(err => { setdebtdata(0); })
+  }
+  const paidamount = () => {
+    axios.post("http://localhost:5000/getpaidamount",{
+      "email":details.email
+    })
+      .then((res) => {
+        if (res.status == 200) {
+          const count = res.data.Paid;
+          setpaiddata(count);
+        }
+        else {
+          setpaiddata(0);
+        }
+      })
+      .catch(err => { setpaiddata(0); })
+  }
 
-  },);
+  useEffect(() => {
+    totalamount();
+    paidamount();
+    activeloan();
+    rejectloan();
+
+  },[]);
 
   var data1 = {
     labels: ['Paid', 'Debt'],

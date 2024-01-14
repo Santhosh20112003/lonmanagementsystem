@@ -1,6 +1,8 @@
 import axios from 'axios';
 import React, { useContext, useEffect, useState } from 'react';
 import { Context } from './Dashboard';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 function Loans() {
   const [loanDetails, setLoanDetails] = useState([]);
@@ -30,7 +32,7 @@ function Loans() {
           console.log('Error fetching loan details:', err);
         });
     
-  }, );
+  },[]);
 
   const CancelRequest = (index) => {
 	const loan = loanDetails[index];
@@ -42,16 +44,43 @@ function Loans() {
 		.post('http://localhost:5000/cancelloan', { loanid: loan.loanid ,email: loan.borroweremail,amount:loan.amount,name:loan.borrowername})
 		.then((res) => {
 		  if (res.status === 200) {
-			alert("Loan Canceled");
+        toast.success('Loan Cancelled', {
+          position: "top-right",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: false,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+          });
 			window.location.reload();
 		  }
 		})
 		.catch((err) => {
 		  console.log(err);
 		  if (err.response.status == 401) {
-			alert("Loan Already Canceled");
+        toast.warn('Loan Already Accepted', {
+          position: "top-right",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: false,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "colored",
+          });
 		  } else {
-			alert("Error while canceling the loan");
+        toast.error('Error while accepting the loan', {
+          position: "top-right",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: false,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "colored",
+          });
 		  }
 		});
 	}
@@ -126,6 +155,7 @@ function Loans() {
           </tbody>
         </table>
       </div>
+      <ToastContainer />
     </div>
   );
 }

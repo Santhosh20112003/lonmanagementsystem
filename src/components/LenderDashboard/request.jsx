@@ -1,12 +1,14 @@
 import axios from 'axios';
 import React, { useContext, useEffect, useState } from 'react';
 import { Details } from './Dashboard';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 
 function Loans() {
   const [loanDetails, setLoanDetails] = useState([]);
   const [details, setDetails] = useContext(Details);
-  var pdf = "../asserts/documents/taskdetails.pdf"
+  var pdf = "../asserts/documents/taskdetails.pdf";
 
   useEffect(() => {
     axios.get('http://localhost:5000/getloanrequest')
@@ -29,6 +31,16 @@ function Loans() {
       })
       .catch(err => {
         console.log('Error fetching loan details:', err);
+        toast.error('Error fetching loan details', {
+          position: "top-right",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: false,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+          });
       });
   }, []);
 
@@ -53,22 +65,48 @@ function Loans() {
       axios.post('http://localhost:5000/acceptloan', { details: loanRequest })
         .then(res => {
           if (res.status === 200) {
-            alert("Loan Provided");
+            toast.success('Loan Provided 👍', {
+              position: "top-right",
+              autoClose: 3000,
+              hideProgressBar: false,
+              closeOnClick: false,
+              pauseOnHover: true,
+              draggable: true,
+              progress: undefined,
+              theme: "colored",
+              });
             window.location.reload();
           }
         })
         .catch(err => {
           console.log(err);
           if(err.response.status == 401){
-            alert("Loan Already Accepted");
+            toast.warn('Loan Already Accepted', {
+              position: "top-right",
+              autoClose: 3000,
+              hideProgressBar: false,
+              closeOnClick: false,
+              pauseOnHover: true,
+              draggable: true,
+              progress: undefined,
+              theme: "colored",
+              });
           }
           else{
-            alert("Error while accepting the loan");
+            toast.error('Error while accepting the loan', {
+              position: "top-right",
+              autoClose: 3000,
+              hideProgressBar: false,
+              closeOnClick: false,
+              pauseOnHover: true,
+              draggable: true,
+              progress: undefined,
+              theme: "colored",
+              });
           }
         });
      }
   };
-
 
   const cancelRequest = (index) => {
     const loan = loanDetails[index];
@@ -91,17 +129,44 @@ function Loans() {
       axios.post('http://localhost:5000/acceptloan', { details: loanRequest })
         .then(res => {
           if (res.status === 200) {
-            alert("Loan Canceled");
+            toast.success('Loan Cancelled', {
+              position: "top-right",
+              autoClose: 3000,
+              hideProgressBar: false,
+              closeOnClick: false,
+              pauseOnHover: true,
+              draggable: true,
+              progress: undefined,
+              theme: "light",
+              });
             window.location.reload();
           }
         })
         .catch(err => {
           console.log(err);
           if(err.response.status == 401){
-            alert("Loan Already Accepted");
+            toast.warn('Loan Already Accepted', {
+              position: "top-right",
+              autoClose: 3000,
+              hideProgressBar: false,
+              closeOnClick: false,
+              pauseOnHover: true,
+              draggable: true,
+              progress: undefined,
+              theme: "colored",
+              });
           }
           else{
-            alert("Error while accepting the loan");
+            toast.error('Error while accepting the loan', {
+              position: "top-right",
+              autoClose: 3000,
+              hideProgressBar: false,
+              closeOnClick: false,
+              pauseOnHover: true,
+              draggable: true,
+              progress: undefined,
+              theme: "colored",
+              });
           }
         });
      }
@@ -181,6 +246,7 @@ function Loans() {
           </tbody>
         </table>
       </div>
+      <ToastContainer />
     </div>
   );
 }

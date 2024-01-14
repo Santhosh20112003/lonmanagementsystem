@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Routes, Route, Navigate, BrowserRouter } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import Home from './Home/Home';
 import BorrowerLogin from './borrowerauth/BorrowerLogin';
 import LenderLogin from './Lenderauth/LenderLogin';
@@ -79,6 +79,7 @@ function App() {
     </Router>
   );
 }
+
 
 export default App;
 
